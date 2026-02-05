@@ -3,115 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IA ELITE PRO - PROTOCOLO LUANDA</title>
+    <title>IA ELITE PRO - LUANDA VOICE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;700;900&display=swap');
-        
-        :root {
-            --neon-pink: #db2777;
-            --bg-dark: #050507;
-        }
-
-        body { 
-            background-color: var(--bg-dark); 
-            color: #ffffff; 
-            font-family: 'Inter', sans-serif; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding-bottom: 50px;
-        }
-
+        :root { --neon-pink: #db2777; --bg-dark: #050507; }
+        body { background-color: var(--bg-dark); color: #fff; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding-bottom: 50px; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
-
-        .glass-panel { 
-            background: rgba(18, 18, 22, 0.98); 
-            border: 1px solid rgba(255, 255, 255, 0.05); 
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            width: 100%;
-            max-width: 450px;
-        }
-
-        .neon-container { 
-            border: 1px solid rgba(219, 39, 119, 0.3); 
-            box-shadow: 0 0 40px rgba(219, 39, 119, 0.1); 
-            background: linear-gradient(180deg, rgba(18,18,22,1) 0%, rgba(10,10,12,1) 100%);
-            width: 100%;
-            max-width: 450px;
-            border-radius: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* BARRA DE PROCESSAMENTO */
-        #loading-bar-container {
-            width: 100%;
-            height: 4px;
-            background: rgba(255,255,255,0.05);
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: none;
-        }
-        #loading-bar {
-            width: 0%;
-            height: 100%;
-            background: var(--neon-pink);
-            box-shadow: 0 0 10px var(--neon-pink);
-            transition: width 0.3s ease;
-        }
-
-        .btn-action {
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            user-select: none;
-        }
-
-        /* REAÇÃO DE CLIQUE REAL */
-        .btn-action:active {
-            transform: scale(0.92);
-            filter: brightness(1.2);
-        }
-
-        .status-badge {
-            font-size: 11px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            padding: 8px 16px;
-            border-radius: 12px;
-            background: rgba(255,255,255,0.03);
-            display: inline-block;
-        }
-
-        .chip-vela {
-            font-size: 11px;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-weight: 900;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-            min-width: 62px;
-            text-align: center;
-        }
-
-        @keyframes scan {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-        .scanner-line {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: rgba(219, 39, 119, 0.5);
-            box-shadow: 0 0 15px var(--neon-pink);
-            top: 0;
-            display: none;
-            animation: scan 2s linear infinite;
-        }
+        .glass-panel { background: rgba(18, 18, 22, 0.98); border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border-radius: 24px; width: 100%; max-width: 450px; }
+        .neon-container { border: 1px solid rgba(219, 39, 119, 0.3); box-shadow: 0 0 40px rgba(219, 39, 119, 0.1); background: linear-gradient(180deg, rgba(18,18,22,1) 0%, rgba(10,10,12,1) 100%); width: 100%; max-width: 450px; border-radius: 40px; position: relative; overflow: hidden; }
+        #loading-bar-container { width: 100%; height: 4px; background: rgba(255,255,255,0.05); position: absolute; top: 0; left: 0; display: none; }
+        #loading-bar { width: 0%; height: 100%; background: var(--neon-pink); box-shadow: 0 0 10px var(--neon-pink); transition: width 0.3s ease; }
+        .btn-action { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; user-select: none; }
+        .btn-action:active { transform: scale(0.92); filter: brightness(1.2); }
+        .status-badge { font-size: 11px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; padding: 8px 16px; border-radius: 12px; background: rgba(255,255,255,0.03); display: inline-block; }
+        .chip-vela { font-size: 11px; padding: 6px 12px; border-radius: 8px; font-weight: 900; text-shadow: 0 1px 2px rgba(0,0,0,0.5); min-width: 62px; text-align: center; }
+        @keyframes scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+        .scanner-line { position: absolute; width: 100%; height: 2px; background: rgba(219, 39, 119, 0.5); box-shadow: 0 0 15px var(--neon-pink); top: 0; display: none; animation: scan 2s linear infinite; }
     </style>
 </head>
 <body class="p-4 space-y-6">
@@ -132,19 +40,10 @@
         </div>
     </div>
 
-    <div class="glass-panel p-4 flex items-center justify-between border-l-4" id="tendencia-box" style="border-left-color: #3f3f46;">
-        <div>
-            <p class="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Fluxo Provedor</p>
-            <p id="tendencia-txt" class="text-lg font-black italic">AGUARDANDO...</p>
-        </div>
-        <div id="tendencia-led" class="w-3 h-3 rounded-full bg-zinc-700"></div>
-    </div>
-
     <div class="neon-container p-8 text-center flex flex-col items-center">
         <div id="loading-bar-container"><div id="loading-bar"></div></div>
         <div class="scanner-line" id="scanner"></div>
-
-        <div id="status" class="status-badge text-zinc-500 mb-4 mt-2">IA Sistema Pronto</div>
+        <div id="status" class="status-badge text-zinc-500 mb-4 mt-2">IA PRONTA</div>
         
         <div class="my-6">
             <p id="timer" class="text-7xl font-orbitron font-black text-white tracking-tighter">--:--</p>
@@ -152,106 +51,89 @@
         </div>
 
         <div class="w-full grid grid-cols-2 gap-4 py-6 border-y border-white/5 my-6">
-            <div class="text-left">
-                <span class="text-[9px] font-black text-zinc-500 uppercase block mb-1">Assertividade</span>
-                <p id="pct" class="text-3xl font-black text-pink-500">0%</p>
-            </div>
-            <div class="text-right">
-                <span class="text-[9px] font-black text-zinc-500 uppercase block mb-1">Alvo IA</span>
-                <p id="alvo" class="text-2xl font-black italic text-white">---</p>
-            </div>
+            <div class="text-left"><span class="text-[9px] font-black text-zinc-500 uppercase block mb-1">Assertividade</span><p id="pct" class="text-3xl font-black text-pink-500">0%</p></div>
+            <div class="text-right"><span class="text-[9px] font-black text-zinc-500 uppercase block mb-1">Alvo IA</span><p id="alvo" class="text-2xl font-black italic text-white">---</p></div>
         </div>
 
         <input type="file" id="file" class="hidden" accept="image/*">
         <div class="w-full space-y-3">
-            <button onclick="document.getElementById('file').click()" class="btn-action w-full bg-zinc-900 border border-white/5 py-4 rounded-2xl text-[10px] font-black text-zinc-400">
-                1. CARREGAR PRINT
-            </button>
-            <button onclick="analisar()" class="btn-action w-full bg-pink-600 py-5 rounded-2xl text-xl font-black text-white shadow-lg">
-                2. GERAR PREVISÃO
-            </button>
+            <button onclick="falar('Carregar print'); document.getElementById('file').click()" class="btn-action w-full bg-zinc-900 border border-white/5 py-4 rounded-2xl text-[10px] font-black text-zinc-400">1. CARREGAR PRINT</button>
+            <button id="btn-gerar" onclick="analisar()" class="btn-action w-full bg-pink-600 py-5 rounded-2xl text-xl font-black text-white shadow-lg">2. GERAR PREVISÃO</button>
         </div>
     </div>
 
     <div class="glass-panel p-6 text-center">
-        <p class="text-[10px] font-black text-zinc-400 uppercase mb-4 tracking-widest">Validar Assertividade</p>
         <div class="grid grid-cols-2 gap-3">
-            <button onclick="feedback('CERTO')" class="btn-action py-3 rounded-xl border border-green-600 text-green-500 font-black text-xs">
-                CERTO ✅
-            </button>
-            <button onclick="feedback('ERRADO')" class="btn-action py-3 rounded-xl border border-red-600 text-red-500 font-black text-xs">
-                ERRADO ❌
-            </button>
+            <button onclick="falar('Sinal certo'); feedback('CERTO')" class="btn-action py-3 rounded-xl border border-green-600 text-green-500 font-black text-xs">CERTO ✅</button>
+            <button onclick="falar('Sinal errado'); feedback('ERRADO')" class="btn-action py-3 rounded-xl border border-red-600 text-red-500 font-black text-xs">ERRADO ❌</button>
         </div>
     </div>
 
-    <div class="glass-panel p-6">
-        <div class="flex items-center justify-between mb-4 border-b border-white/5 pb-2">
-            <span class="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Histórico Analisado</span>
-        </div>
-        <div id="hist" class="flex flex-wrap gap-2 justify-center"></div>
-    </div>
+    <div class="glass-panel p-6"><div id="hist" class="flex flex-wrap gap-2 justify-center"></div></div>
 
     <script>
         const API_URL = 'https://ia-boot-elite-backend-qs3x.onrender.com';
 
-        // Relógio Luanda
+        function falar(t) {
+            window.speechSynthesis.cancel();
+            const m = new SpeechSynthesisUtterance(t);
+            m.lang = 'pt-PT';
+            window.speechSynthesis.speak(m);
+        }
+
         setInterval(() => {
             const opt = { timeZone: 'Africa/Luanda', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
             document.getElementById('clock').innerText = new Intl.DateTimeFormat('pt-PT', opt).format(new Date());
         }, 1000);
 
-        // Render Status
-        async function checkServer() {
-            const led = document.getElementById('render-led');
-            try {
-                const r = await fetch(`${API_URL}/ping`);
-                if(r.ok) { led.style.backgroundColor = '#22c55e'; led.style.boxShadow = '0 0 10px #22c55e'; }
-            } catch(e) { led.style.backgroundColor = '#dc2626'; }
+        // FUNÇÃO PARA ACORDAR O SERVIDOR IMEDIATAMENTE
+        async function wakeUp() {
+            try { await fetch(`${API_URL}/ping`); console.log("Servidor acordado!"); } catch(e){}
         }
-        setInterval(checkServer, 5000);
+        wakeUp();
 
-        // ANALISAR COM LINHA DE PROCESSAMENTO
         async function analisar() {
             const file = document.getElementById('file').files[0];
-            if (!file) return alert("Selecione o print primeiro!");
+            if (!file) return alert("Selecione o print!");
             
-            // Ativar Loading e Scanner
+            falar("A iniciar análise inteligente");
             document.getElementById('loading-bar-container').style.display = 'block';
             document.getElementById('scanner').style.display = 'block';
             let bar = document.getElementById('loading-bar');
-            bar.style.width = '30%';
-
-            const statusEl = document.getElementById('status');
-            statusEl.innerText = "LENDO DADOS...";
+            bar.style.width = '40%';
+            document.getElementById('status').innerText = "LENDO DADOS...";
 
             const fd = new FormData();
             fd.append('print', file);
 
             try {
-                bar.style.width = '60%';
-                const res = await fetch(`${API_URL}/analisar-fluxo`, { method: 'POST', body: fd });
+                // Timeout de 30 segundos para evitar que fique preso
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 35000);
+
+                const res = await fetch(`${API_URL}/analisar-fluxo`, { 
+                    method: 'POST', 
+                    body: fd,
+                    signal: controller.signal 
+                });
+                clearTimeout(timeoutId);
+                
                 const d = await res.json();
                 
                 bar.style.width = '100%';
                 setTimeout(() => {
                     document.getElementById('loading-bar-container').style.display = 'none';
                     document.getElementById('scanner').style.display = 'none';
-                    bar.style.width = '0%';
                 }, 500);
-
-                document.getElementById('tendencia-txt').innerText = d.tendencia;
-                document.getElementById('tendencia-txt').style.color = d.corTendencia;
-                document.getElementById('tendencia-led').style.backgroundColor = d.corTendencia;
-                document.getElementById('tendencia-box').style.borderLeftColor = d.corTendencia;
 
                 document.getElementById('timer').innerText = d.timerRosa.substring(0, 5);
                 document.getElementById('pct').innerText = d.pct;
                 document.getElementById('banca').innerText = d.banca;
                 document.getElementById('alvo').innerText = d.alvo;
-                
-                statusEl.innerText = d.status;
-                statusEl.style.color = d.cor;
+                document.getElementById('status').innerText = d.status;
+                document.getElementById('status').style.color = d.cor;
+
+                falar(`${d.status}. Alvo em ${d.alvo}`);
 
                 const h = document.getElementById('hist'); h.innerHTML = '';
                 d.historico.forEach(v => {
@@ -261,18 +143,11 @@
                     c.innerText = v.toFixed(2) + 'x'; h.appendChild(c);
                 });
             } catch (e) { 
-                alert("Servidor Render a acordar. Aguarde..."); 
+                falar("Servidor em repouso. Aguarde trinta segundos e tente novamente.");
                 document.getElementById('loading-bar-container').style.display = 'none';
+                document.getElementById('scanner').style.display = 'none';
+                alert("O servidor está a acordar. Por favor, tente clicar em Gerar Previsão novamente em 20 segundos.");
             }
-        }
-
-        async function feedback(tipo) {
-            await fetch(`${API_URL}/feedback`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ status: tipo })
-            });
-            alert("Feedback Guardado na IA!");
         }
     </script>
 </body>
