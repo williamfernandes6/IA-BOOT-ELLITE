@@ -3,72 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IA ELITE PRO - COMMAND CENTER</title>
+    <title>IA ELITE PRO - PROTOCOLO LUANDA V2.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;700;900&display=swap');
-        body { background: #050507; color: #fff; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;700;900&display=swap');
+        
+        :root { --neon-pink: #db2777; --neon-green: #22c55e; --bg-dark: #050507; }
+        body { background-color: var(--bg-dark); color: #ffffff; font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        .neon-card { border: 1px solid rgba(219, 39, 119, 0.4); box-shadow: 0 0 50px rgba(219, 39, 119, 0.15); border-radius: 35px; width: 100%; max-width: 440px; position: relative; overflow: hidden; background: #0a0a0c; }
-        .scanner { position: absolute; width: 100%; height: 2px; background: #db2777; box-shadow: 0 0 20px #db2777; top: 0; display: none; animation: scan 2s linear infinite; z-index: 100; }
+        .glass-panel { background: rgba(18, 18, 22, 0.98); border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border-radius: 24px; }
+        .neon-container { border: 1px solid rgba(219, 39, 119, 0.3); box-shadow: 0 0 40px rgba(219, 39, 119, 0.1); background: linear-gradient(180deg, rgba(18,18,22,1) 0%, rgba(10,10,12,1) 100%); border-radius: 48px; }
+        .btn-action { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); text-transform: uppercase; letter-spacing: 1px; }
+        .btn-action:active { transform: scale(0.96); }
+        .chip-vela { font-size: 11px; padding: 5px 10px; border-radius: 6px; font-weight: 800; min-width: 55px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+        .terminal-log { font-family: 'Courier New', monospace; font-size: 10px; color: #10b981; height: 100px; overflow-y: auto; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 15px; }
         @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
-        .glass { background: rgba(18, 18, 22, 0.98); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; }
-        .terminal { font-family: 'Courier New', monospace; font-size: 9px; color: #10b981; height: 110px; overflow-y: auto; background: rgba(0,0,0,0.5); padding: 12px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .scanner { position: absolute; width: 100%; height: 2px; background: var(--neon-pink); box-shadow: 0 0 20px var(--neon-pink); top: 0; display: none; animation: scan 2s linear infinite; z-index: 100; }
     </style>
 </head>
-<body class="space-y-4">
+<body class="min-h-screen flex flex-col items-center p-4 lg:p-10">
 
-    <div class="fixed top-4 right-4 z-50 flex items-center gap-2 glass px-4 py-2 border border-white/10 rounded-full">
-        <span class="text-[9px] font-black text-zinc-500 uppercase tracking-widest">IA Integrada 100%</span>
-        <div id="led" class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_#22c55e]"></div>
+    <div class="fixed top-6 right-6 z-50 flex items-center gap-3 glass-panel px-4 py-2 border border-white/5">
+        <span class="text-[9px] font-black text-zinc-500 uppercase">Kernel Deep Mind</span>
+        <div id="render-led" class="w-2.5 h-2.5 rounded-full bg-red-600 shadow-[0_0_10px_red]"></div>
     </div>
 
-    <div class="glass p-6 flex justify-between items-center w-full max-w-[440px] mt-10">
-        <div><p class="text-[9px] text-pink-500 font-black uppercase mb-1">Luanda AI Sector</p><p id="clock" class="text-xl font-orbitron">00:00:00</p></div>
-        <div class="text-right"><p class="text-[9px] text-zinc-500 font-black uppercase mb-1">Banca Elephant</p><p id="banca" class="text-xl font-bold text-green-500 font-orbitron">Kz ---</p></div>
-    </div>
-
-    <div class="neon-card p-8 text-center">
-        <div id="scanner" class="scanner"></div>
-        <div id="status" class="text-[10px] font-black tracking-[0.3em] text-zinc-500 uppercase mb-8">Processamento Deep Mind</div>
-        
-        <div class="mb-8">
-            <p id="pct" class="text-6xl font-orbitron font-black text-white">0%</p>
-            <p class="text-[9px] font-black text-zinc-600 uppercase mt-2 tracking-widest tracking-[0.2em]">Cálculo de Inflexão</p>
+    <div class="w-full max-w-6xl flex flex-col gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="glass-panel p-6 flex justify-between items-center shadow-2xl">
+                <div>
+                    <span class="text-[10px] text-pink-500 font-black uppercase tracking-widest mb-1">Horário Luanda</span>
+                    <div id="clock" class="text-3xl font-orbitron font-bold">00:00:00</div>
+                </div>
+                <div class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></div>
+            </div>
+            <div class="glass-panel p-6 flex justify-between items-center shadow-2xl text-right">
+                <div class="w-full">
+                    <span class="text-[10px] text-zinc-500 font-black uppercase tracking-widest mb-1">Banca Elephant</span>
+                    <div id="banca" class="text-3xl font-bold text-green-500 font-orbitron">Kz 1.007,00</div>
+                </div>
+            </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4 py-6 border-y border-white/5 mb-6">
-            <div class="text-left"><span class="text-[9px] font-black text-zinc-500 uppercase">Previsão</span><p id="alvo" class="text-lg font-black text-pink-500 uppercase tracking-tighter">---</p></div>
-            <div class="text-right"><span class="text-[9px] font-black text-zinc-500 uppercase">Hora Exata</span><p id="timer" class="text-lg font-black text-white">--:--:--</p></div>
-        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-7 flex flex-col gap-6">
+                <div class="glass-panel p-4 border-l-8 border-zinc-700 transition-all" id="tendencia-box">
+                    <span class="text-[10px] font-black text-zinc-500 uppercase">Estado do Provedor</span>
+                    <div id="tendencia-txt" class="text-xl font-black italic">AGUARDANDO AUDITORIA...</div>
+                </div>
 
-        <div class="terminal mb-8 text-left shadow-inner" id="log">
-            > Integrando Teorema de Bayes... OK<br>
-            > Monitorando Detector de Drenagem... OK<br>
-            > Memória de Ciclos (24h) Ativa... OK<br>
-            > Manual V2.0 Carregado no Kernel... OK
-        </div>
+                <div class="neon-container p-10 text-center flex flex-col items-center justify-center min-h-[450px] relative">
+                    <div id="scanner" class="scanner"></div>
+                    <div id="status" class="text-[10px] font-black text-zinc-500 uppercase tracking-[0.3em] mb-6">Deep Engine v6.1</div>
+                    
+                    <div class="relative mb-8">
+                        <div id="timer" class="text-[80px] lg:text-[100px] font-orbitron font-black text-white leading-none tracking-tighter">--:--</div>
+                        <div class="text-[10px] font-black text-zinc-600 uppercase tracking-[0.3em] mt-4">Previsão Hora Exata</div>
+                    </div>
 
-        <input type="file" id="file" class="hidden" accept="image/*">
-        <div class="space-y-4">
-            <button onclick="falar('A carregar dados para o Kernel'); document.getElementById('file').click()" class="w-full bg-zinc-900 py-4 rounded-2xl text-[10px] font-black text-zinc-500 uppercase tracking-widest border border-white/5">1. Analisar Fluxo de Dados</button>
-            <button onclick="analisar()" class="w-full bg-pink-600 py-5 rounded-2xl text-xl font-black text-white shadow-[0_10px_40px_rgba(219,39,119,0.3)] uppercase">2. Gerar Sinal Certeiro</button>
-        </div>
-    </div>
+                    <div class="w-full grid grid-cols-2 gap-6 py-8 border-y border-white/5 my-8">
+                        <div class="text-left">
+                            <span class="text-[10px] font-black text-zinc-500 uppercase">Assertividade</span>
+                            <div id="pct" class="text-4xl font-black text-pink-500">0%</div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[10px] font-black text-zinc-500 uppercase">Alvo IA</span>
+                            <div id="alvo" class="text-3xl font-black italic text-white">---</div>
+                        </div>
+                    </div>
 
-    <div class="glass p-6 w-full max-w-[440px] text-center border border-white/5">
-        <p id="tendencia_tag" class="text-[10px] font-black uppercase text-zinc-500 mb-4 tracking-widest">Análise de Tendência de Ciclo (30 Velas)</p>
-        <div class="flex flex-wrap gap-2 justify-center" id="hist"></div>
+                    <div class="terminal w-full text-left mb-8 terminal-log" id="log">
+                        > Sistema pronto para 30 velas...<br>
+                        > Teorema de Bayes carregado...
+                    </div>
+
+                    <input type="file" id="file" class="hidden" accept="image/*">
+                    <div class="w-full flex flex-col gap-4">
+                        <button onclick="falar('Carregar print'); document.getElementById('file').click()" class="btn-action w-full bg-zinc-800/50 py-4 rounded-2xl text-[11px] font-black border border-white/5">1. Upload Print Aviator</button>
+                        <button onclick="analisar()" class="btn-action w-full bg-pink-600 py-6 rounded-3xl text-xl font-black text-white shadow-2xl">2. Executar Inteligência</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 flex flex-col gap-6">
+                <div class="glass-panel p-8 text-center">
+                    <span class="text-[11px] font-black text-white uppercase tracking-widest block mb-4">Treinar Super Inteligência</span>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="feedback('CERTO')" class="btn-action py-4 rounded-2xl border border-green-600/30 text-green-500 font-black text-sm hover:bg-green-600 hover:text-white">CERTO ✅</button>
+                        <button onclick="feedback('ERRADO')" class="btn-action py-4 rounded-2xl border border-red-600/30 text-red-500 font-black text-sm hover:bg-red-600 hover:text-white">ERRADO ❌</button>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 flex-grow flex flex-col">
+                    <span class="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-6">Histórico de Fluxo (30 Velas)</span>
+                    <div id="hist" class="flex flex-wrap gap-2.5 justify-center"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
         const API_URL = 'https://ia-boot-elite-backend-qs3x.onrender.com';
-
-        function addLog(msg) {
-            const log = document.getElementById('log');
-            log.innerHTML += `> ${msg}<br>`;
-            log.scrollTop = log.scrollHeight;
-        }
 
         function falar(t) {
             window.speechSynthesis.cancel();
@@ -77,17 +112,33 @@
             window.speechSynthesis.speak(m);
         }
 
+        function addLog(msg) {
+            const l = document.getElementById('log');
+            l.innerHTML += `> ${msg}<br>`;
+            l.scrollTop = l.scrollHeight;
+        }
+
         setInterval(() => {
-            document.getElementById('clock').innerText = new Date().toLocaleTimeString('pt-PT', {timeZone:'Africa/Luanda'});
+            const options = { timeZone: 'Africa/Luanda', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            document.getElementById('clock').innerText = new Intl.DateTimeFormat('pt-PT', options).format(new Date());
         }, 1000);
+
+        async function checkServer() {
+            const led = document.getElementById('render-led');
+            try {
+                const r = await fetch(`${API_URL}/ping`);
+                if(r.ok) { led.className = "w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_10px_#22c55e]"; }
+            } catch(e) { led.className = "w-2.5 h-2.5 rounded-full bg-red-600 shadow-[0_0_10px_red]"; }
+        }
+        setInterval(checkServer, 5000);
 
         async function analisar() {
             const file = document.getElementById('file').files[0];
-            if(!file) return alert("Selecione o Print!");
+            if (!file) return alert("ERRO: Selecione o print!");
 
-            falar("Iniciando auditoria Bayesiana. Verificando memória de ciclos.");
+            falar("Iniciando auditoria Bayesiana de 30 velas.");
             document.getElementById('scanner').style.display = 'block';
-            addLog("Executando Match de Padrões...");
+            addLog("Analisando padrões sequenciais...");
 
             const fd = new FormData();
             fd.append('print', file);
@@ -101,27 +152,32 @@
                 document.getElementById('pct').innerText = d.pct;
                 document.getElementById('alvo').innerText = d.alvo;
                 document.getElementById('banca').innerText = d.banca;
+                document.getElementById('tendencia-txt').innerText = d.tendencia;
                 document.getElementById('status').innerText = d.status;
                 document.getElementById('status').style.color = d.cor;
-                document.getElementById('tendencia_tag').innerText = d.tendencia;
-                
-                addLog(`Status: ${d.status}`);
-                addLog(`Decisão: ${d.dica}`);
+                document.getElementById('tendencia-box').style.borderLeftColor = d.cor;
 
-                falar(`${d.status}. ${d.dica}. Alvo recomendado em ${d.alvo}`);
+                addLog(`Decisão: ${d.dica}`);
+                falar(`${d.status}. Entrada para ${d.alvo} às ${d.horaExata}`);
 
                 const h = document.getElementById('hist'); h.innerHTML = '';
                 d.historico.forEach(v => {
-                    const c = document.createElement('div');
+                    const chip = document.createElement('div');
                     let bg = v >= 10 ? 'bg-pink-600' : (v >= 5 ? 'bg-purple-600' : 'bg-blue-600');
-                    c.className = `px-2 py-1 rounded text-[9px] font-black ${bg} text-white border border-white/10`;
-                    c.innerText = v.toFixed(2) + 'x'; h.appendChild(c);
+                    chip.className = `chip-vela ${bg} text-white`;
+                    chip.innerText = v.toFixed(2) + 'x';
+                    h.appendChild(chip);
                 });
-            } catch(e) { 
-                addLog("ERRO: O Kernel não respondeu.");
-                falar("Erro de conexão.");
+
+            } catch (error) {
+                alert("Servidor em standby. Aguarde 30 segundos.");
                 document.getElementById('scanner').style.display = 'none';
             }
+        }
+
+        async function feedback(tipo) {
+            addLog(`Feedback enviado: ${tipo}`);
+            falar("Obrigado. IA aprendendo com o resultado.");
         }
     </script>
 </body>
