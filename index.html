@@ -3,76 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IA ELITE PRO - LUANDA VOICE</title>
+    <title>IA ELITE PRO V2.0 - SHA-512</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;700;900&display=swap');
-        :root { --neon-pink: #db2777; --bg-dark: #050507; }
-        body { background-color: var(--bg-dark); color: #fff; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding-bottom: 50px; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;900&display=swap');
+        body { background: #050507; color: #fff; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        .glass-panel { background: rgba(18, 18, 22, 0.98); border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border-radius: 24px; width: 100%; max-width: 450px; }
-        .neon-container { border: 1px solid rgba(219, 39, 119, 0.3); box-shadow: 0 0 40px rgba(219, 39, 119, 0.1); background: linear-gradient(180deg, rgba(18,18,22,1) 0%, rgba(10,10,12,1) 100%); width: 100%; max-width: 450px; border-radius: 40px; position: relative; overflow: hidden; }
-        #loading-bar-container { width: 100%; height: 4px; background: rgba(255,255,255,0.05); position: absolute; top: 0; left: 0; display: none; }
-        #loading-bar { width: 0%; height: 100%; background: var(--neon-pink); box-shadow: 0 0 10px var(--neon-pink); transition: width 0.3s ease; }
-        .btn-action { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; user-select: none; }
-        .btn-action:active { transform: scale(0.92); filter: brightness(1.2); }
-        .status-badge { font-size: 11px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; padding: 8px 16px; border-radius: 12px; background: rgba(255,255,255,0.03); display: inline-block; }
-        .chip-vela { font-size: 11px; padding: 6px 12px; border-radius: 8px; font-weight: 900; text-shadow: 0 1px 2px rgba(0,0,0,0.5); min-width: 62px; text-align: center; }
-        @keyframes scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
-        .scanner-line { position: absolute; width: 100%; height: 2px; background: rgba(219, 39, 119, 0.5); box-shadow: 0 0 15px var(--neon-pink); top: 0; display: none; animation: scan 2s linear infinite; }
+        .neon-card { border: 1px solid rgba(219, 39, 119, 0.3); box-shadow: 0 0 40px rgba(219, 39, 119, 0.1); border-radius: 40px; width: 100%; max-width: 420px; overflow: hidden; position: relative; }
+        .scanner { position: absolute; width: 100%; height: 3px; background: #db2777; box-shadow: 0 0 15px #db2777; top: 0; display: none; animation: scan 2s linear infinite; z-index: 50; }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+        .glass { background: rgba(18, 18, 22, 0.98); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; }
+        .btn-main { transition: all 0.2s; }
+        .btn-main:active { transform: scale(0.95); filter: brightness(1.2); }
     </style>
 </head>
-<body class="p-4 space-y-6">
+<body class="space-y-6">
 
-    <div class="fixed top-4 right-4 z-50 flex items-center gap-2 glass-panel px-4 py-2 w-auto border border-white/10 rounded-full">
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-2 glass px-4 py-2 border border-white/10 rounded-full">
         <span class="text-[9px] font-black text-zinc-500 uppercase">SERVER STATUS</span>
-        <div id="render-led" class="w-2.5 h-2.5 rounded-full bg-red-600 shadow-[0_0_5px_red]"></div>
+        <div id="led" class="w-2.5 h-2.5 rounded-full bg-red-600 shadow-[0_0_5px_red]"></div>
     </div>
 
-    <div class="glass-panel p-6 flex justify-between items-center border border-white/5 shadow-2xl">
+    <div class="glass p-6 flex justify-between items-center w-full max-w-[420px] mt-12">
         <div class="text-left">
-            <p class="text-[9px] text-pink-500 font-black uppercase tracking-widest mb-1">Luanda Time</p>
-            <p id="clock" class="text-xl font-orbitron font-bold">00:00:00</p>
+            <p class="text-[9px] text-pink-500 font-black uppercase mb-1">Luanda Time</p>
+            <p id="clock" class="text-xl font-orbitron">00:00:00</p>
         </div>
         <div class="text-right">
-            <p class="text-[9px] text-zinc-500 font-black uppercase tracking-widest mb-1">Banca Elephant</p>
+            <p class="text-[9px] text-zinc-500 font-black uppercase mb-1">Banca Elephant</p>
             <p id="banca" class="text-xl font-bold text-green-500 font-orbitron">Kz ---</p>
         </div>
     </div>
 
-    <div class="neon-container p-8 text-center flex flex-col items-center">
-        <div id="loading-bar-container"><div id="loading-bar"></div></div>
-        <div class="scanner-line" id="scanner"></div>
-        <div id="status" class="status-badge text-zinc-500 mb-4 mt-2">IA PRONTA</div>
+    <div class="neon-card p-8 text-center bg-[#0a0a0c]">
+        <div id="scanner" class="scanner"></div>
+        <div id="status" class="text-[11px] font-black tracking-widest text-zinc-500 uppercase mb-6">Auditoria Pronta (Manual V2.0)</div>
         
-        <div class="my-6">
+        <div class="mb-8">
             <p id="timer" class="text-7xl font-orbitron font-black text-white tracking-tighter">--:--</p>
-            <p class="text-[10px] font-black text-zinc-600 uppercase tracking-[0.3em] mt-2">Próxima Entrada</p>
+            <p class="text-[10px] font-black text-zinc-600 uppercase mt-2 tracking-widest">Ponto de Entrada</p>
         </div>
 
-        <div class="w-full grid grid-cols-2 gap-4 py-6 border-y border-white/5 my-6">
-            <div class="text-left"><span class="text-[9px] font-black text-zinc-500 uppercase block mb-1">Assertividade</span><p id="pct" class="text-3xl font-black text-pink-500">0%</p></div>
-            <div class="text-right"><span class="text-[9px] font-black text-zinc-500 uppercase block mb-1">Alvo IA</span><p id="alvo" class="text-2xl font-black italic text-white">---</p></div>
+        <div class="grid grid-cols-2 gap-4 py-6 border-y border-white/5 mb-6">
+            <div class="text-left">
+                <span class="text-[9px] font-black text-zinc-500 uppercase">Assertividade</span>
+                <p id="pct" class="text-3xl font-black text-pink-500">0%</p>
+            </div>
+            <div class="text-right">
+                <span class="text-[9px] font-black text-zinc-500 uppercase">Alvo IA</span>
+                <p id="alvo" class="text-2xl font-black italic text-white">---</p>
+            </div>
+        </div>
+
+        <div class="glass p-4 mb-8 bg-white/5 border border-white/10 text-left">
+            <p class="text-[9px] font-black text-pink-500 uppercase mb-1">Dica de Compliance:</p>
+            <p id="dica" class="text-[11px] font-medium text-zinc-400 italic leading-relaxed">
+                Aguardando upload do print para iniciar o Protocolo de Inflexão e análise de 30 Gaps.
+            </p>
         </div>
 
         <input type="file" id="file" class="hidden" accept="image/*">
-        <div class="w-full space-y-3">
-            <button onclick="falar('Carregar print'); document.getElementById('file').click()" class="btn-action w-full bg-zinc-900 border border-white/5 py-4 rounded-2xl text-[10px] font-black text-zinc-400">1. CARREGAR PRINT</button>
-            <button id="btn-gerar" onclick="analisar()" class="btn-action w-full bg-pink-600 py-5 rounded-2xl text-xl font-black text-white shadow-lg">2. GERAR PREVISÃO</button>
+        <div class="space-y-4">
+            <button onclick="falar('A carregar print para auditoria visual'); document.getElementById('file').click()" class="btn-main w-full bg-zinc-900 py-4 rounded-2xl text-[10px] font-black text-zinc-500 uppercase tracking-widest border border-white/5">1. Upload Print Elephant</button>
+            <button onclick="analisar()" class="btn-main w-full bg-pink-600 py-5 rounded-2xl text-xl font-black text-white shadow-2xl uppercase">2. Gerar Sinal Elite</button>
         </div>
     </div>
 
-    <div class="glass-panel p-6 text-center">
-        <div class="grid grid-cols-2 gap-3">
-            <button onclick="falar('Sinal certo'); feedback('CERTO')" class="btn-action py-3 rounded-xl border border-green-600 text-green-500 font-black text-xs">CERTO ✅</button>
-            <button onclick="falar('Sinal errado'); feedback('ERRADO')" class="btn-action py-3 rounded-xl border border-red-600 text-red-500 font-black text-xs">ERRADO ❌</button>
-        </div>
+    <div class="glass p-6 w-full max-w-[420px] text-center border border-white/5">
+        <p id="tendencia" class="text-[10px] font-black uppercase text-zinc-500 mb-4 tracking-widest">Tendência do Ciclo Atual</p>
+        <div class="flex flex-wrap gap-2 justify-center" id="hist"></div>
     </div>
-
-    <div class="glass-panel p-6"><div id="hist" class="flex flex-wrap gap-2 justify-center"></div></div>
 
     <script>
-        const API_URL = 'https://ia-boot-elite-backend-qs3x.onrender.com';
+        // COLA AQUI O LINK QUE APARECE NO TEU BROWSER DO RENDER (SEM O / NO FINAL)
+        const API_URL = 'https://ia-boot-elite-backend-qs3x.onrender.com'; 
 
         function falar(t) {
             window.speechSynthesis.cancel();
@@ -82,71 +86,60 @@
         }
 
         setInterval(() => {
-            const opt = { timeZone: 'Africa/Luanda', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-            document.getElementById('clock').innerText = new Intl.DateTimeFormat('pt-PT', opt).format(new Date());
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString('pt-PT', {timeZone:'Africa/Luanda'});
         }, 1000);
 
-        // FUNÇÃO PARA ACORDAR O SERVIDOR IMEDIATAMENTE
-        async function wakeUp() {
-            try { await fetch(`${API_URL}/ping`); console.log("Servidor acordado!"); } catch(e){}
+        async function checkServer() {
+            try { 
+                const r = await fetch(`${API_URL}/ping`); 
+                if(r.ok) {
+                    document.getElementById('led').className = 'w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_10px_#22c55e]';
+                }
+            } catch(e) {
+                document.getElementById('led').className = 'w-2.5 h-2.5 rounded-full bg-red-600 shadow-[0_0_10px_red]';
+            }
         }
-        wakeUp();
+        setInterval(checkServer, 5000);
 
         async function analisar() {
             const file = document.getElementById('file').files[0];
-            if (!file) return alert("Selecione o print!");
-            
-            falar("A iniciar análise inteligente");
-            document.getElementById('loading-bar-container').style.display = 'block';
+            if(!file) return alert("Por favor, selecione o print primeiro!");
+
+            falar("A iniciar auditoria técnica de gráfico. Verificando zona de recolha e densidade.");
             document.getElementById('scanner').style.display = 'block';
-            let bar = document.getElementById('loading-bar');
-            bar.style.width = '40%';
-            document.getElementById('status').innerText = "LENDO DADOS...";
+            document.getElementById('status').innerText = "AUDITANDO SHA-512...";
 
             const fd = new FormData();
             fd.append('print', file);
 
             try {
-                // Timeout de 30 segundos para evitar que fique preso
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 35000);
-
-                const res = await fetch(`${API_URL}/analisar-fluxo`, { 
-                    method: 'POST', 
-                    body: fd,
-                    signal: controller.signal 
-                });
-                clearTimeout(timeoutId);
-                
+                const res = await fetch(`${API_URL}/analisar-fluxo`, { method: 'POST', body: fd });
                 const d = await res.json();
-                
-                bar.style.width = '100%';
-                setTimeout(() => {
-                    document.getElementById('loading-bar-container').style.display = 'none';
-                    document.getElementById('scanner').style.display = 'none';
-                }, 500);
 
-                document.getElementById('timer').innerText = d.timerRosa.substring(0, 5);
+                document.getElementById('scanner').style.display = 'none';
+                document.getElementById('timer').innerText = d.timer || "IMEDIATO";
                 document.getElementById('pct').innerText = d.pct;
-                document.getElementById('banca').innerText = d.banca;
                 document.getElementById('alvo').innerText = d.alvo;
+                document.getElementById('banca').innerText = d.banca;
                 document.getElementById('status').innerText = d.status;
                 document.getElementById('status').style.color = d.cor;
+                document.getElementById('dica').innerText = d.dica;
+                document.getElementById('tendencia').innerText = d.tendencia;
 
-                falar(`${d.status}. Alvo em ${d.alvo}`);
+                falar(`${d.status}. ${d.dica}. Ponto de entrada recomendado para ${d.alvo}`);
 
                 const h = document.getElementById('hist'); h.innerHTML = '';
                 d.historico.forEach(v => {
                     const c = document.createElement('div');
-                    let color = v >= 10 ? 'bg-pink-600' : (v >= 2 ? 'bg-purple-600' : 'bg-blue-600');
-                    c.className = `chip-vela ${color} text-white`;
+                    let bg = v >= 10 ? 'bg-pink-600' : (v >= 2 ? 'bg-purple-600' : 'bg-blue-600');
+                    c.className = `px-3 py-1.5 rounded-lg text-[10px] font-black ${bg} text-white min-w-[55px]`;
                     c.innerText = v.toFixed(2) + 'x'; h.appendChild(c);
                 });
-            } catch (e) { 
-                falar("Servidor em repouso. Aguarde trinta segundos e tente novamente.");
-                document.getElementById('loading-bar-container').style.display = 'none';
+
+            } catch(e) { 
+                falar("Falha na conexão com o motor. Certifique-se que o Render está online.");
                 document.getElementById('scanner').style.display = 'none';
-                alert("O servidor está a acordar. Por favor, tente clicar em Gerar Previsão novamente em 20 segundos.");
+                document.getElementById('status').innerText = "ERRO DE SERVIDOR";
             }
         }
     </script>
